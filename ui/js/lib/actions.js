@@ -12,6 +12,8 @@ export default keyMirror({
 	REQUEST_USER_INFORMATION: null,
 	START_AUTH_FLOW: null,
 	ISSUES_STORE_UPDATED: null,
+	REPOS_STORE_UPDATED: null,
+	MILESTONES_STORE_UPDATED: null,
 	OPEN_NEW_TAB: null,
 	UPDATE_FILTER: null
 });

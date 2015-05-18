@@ -4,6 +4,7 @@ import React from 'react';
 import AppStore from 'stores/app';
 import UserStore from 'stores/user';
 import IssuesStore from 'stores/issues';
+import ReposStore from 'stores/repos';
 import apiClient from 'lib/api-client';
 import dispatcher from 'lib/dispatcher';
 import actions from 'lib/actions';
@@ -93,7 +94,7 @@ export default React.createClass({
 							if (response.error) console.warn(response.error);
 
 							this.close();
-							IssuesStore.fetch();
+							ReposStore.fetch();
 						});
 			});
 	},
