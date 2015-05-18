@@ -1,0 +1,44 @@
+{
+	"name": "On Course",
+	"manifest_version": 2,
+	"version": "0.1.0",
+	"description": "Project management that doesn't get in your way.",
+	//"default_locale": "en",
+	"browser_action": {
+		"default_icon": "assets/icon-browser-action.png"
+		//"default_popup": "popup.html"
+	},
+	"icons": {
+		"128": "assets/logo-128.png",
+		"64": "assets/logo-64.png",
+		"32": "assets/logo-32.png",
+		"16": "assets/logo-16.png"
+	},
+	"permissions": [
+		"activeTab",
+		"storage",
+		"<all_urls>",
+		"identity",
+		"https://github.com/",
+		"https://api.github.com/",
+		"http://oncourse-extension-gatekeeper.herokuapp.com/"
+	],
+	"content_scripts": [
+		{
+			"matches": [ "http://*/*", "https://*/*" ],
+			"js": [
+				"ui/js/app.js"
+			],
+			"css": [
+				//"ui/css/font-awesome-base64-font.css",
+				"ui/css/oncourse-icons.css",
+				"ui/css/animate.css",
+				"ui/css/app.css"
+			]
+		}
+	],
+	"background": {
+		"scripts": [ "services/services.js" ],
+		"persistent": false
+	}
+}

@@ -1,0 +1,189 @@
+.oncourse-extension-control-panel {
+	position: fixed;
+	right: 15px;
+	top: 15px;
+	width: 350px;
+	background-color: @card-bg;
+	border-radius: 2px;
+	overflow: hidden;
+	display: none;
+	.BoxShadowHelper(3);
+
+	&.active {
+		display: block;
+	}
+
+	.oncourse-extension-control-panel-header {
+		height: 150px;
+		width: 100%;
+		background-image: url(@b64-control-panel-header-bg);
+		background-color: rgba(255, 255, 255, 0.3);
+		background-size: cover;
+
+		.oncourse-extension-control-panel-header-inner {
+			display: flex;
+			flex-direction: column;
+			flex-wrap: nowrap;
+			justify-content: space-between;
+			position: relative;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.19);
+
+			.oncourse-extension-control-panel-account {
+				color: white;
+				display: flex;
+				flex: .5;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: center;
+				background: rgba(0, 0, 0, 0.2);
+
+				.oncourse-extension-control-panel-branding {
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					align-items: center;
+					flex-wrap: nowrap;
+
+					h1 {
+						display: flex;
+						text-align: left;
+						margin: auto;
+						font-size: 20px;
+						padding-left: 5px;
+						padding-bottom: 3px;
+						text-transform: capitalize;
+						color: white;
+					}
+				}
+
+				.oncourse-extension-control-panel-actions {
+					width: 70px;
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					justify-content: space-between;
+					flex-wrap: nowrap;
+
+					.oncourse-extension-control-panel-action {
+						display: flex;
+						margin: auto;
+						cursor: pointer;
+						font-size: 18px;
+					}
+				}
+			}
+
+			.oncourse-extension-control-panel-search {
+				margin-top: -30px;
+				padding: 15px;
+				display: flex;
+				flex: 1 auto;
+				flex-direction: row;
+				align-items: center;
+				justify-content: space-between;
+
+				button {
+					width: 50px;
+					height: 50px;
+					color: white;
+					font-size: 30px;
+					border-radius: 50%;
+					cursor: pointer;
+					background: #26C6DA;
+					border: none;
+					outline: none;
+					margin: 0;
+					display: flex;
+					.BoxShadowHelper(2);
+
+					&:hover {
+						.BoxShadowHelper(3);
+					}
+
+					i {
+						margin: auto;
+					}
+				}
+
+				input {
+					color: #424242 !important;
+					border: none;
+					outline: none;
+					padding: 12px 8px;
+					width: 80%;
+					height: auto;
+					background-color: rgba(255, 255, 255, .92) !important;
+	 				font-size: 18px;
+					.BoxShadowHelper(2);
+				}
+			}
+
+			.add-task-btn {
+				position: absolute;
+				z-index: 1;
+				bottom: -30px;
+				right: 15px;
+				width: 60px;
+				height: 60px;
+				background-color: #f06292;
+				border-radius: 50%;
+				display: flex;
+				flex-direction: column;
+				justify-content: stretch;
+				align-items: center;
+				color: white;
+				font-size: 30px;
+				line-height: 60px;
+				cursor: pointer;
+				.BoxShadowHelper(2);
+
+				&:hover {
+					.BoxShadowHelper(3);
+				}
+
+				span {
+					margin: auto;
+				}
+			}
+		}
+	}
+
+	.oncourse-extension-control-panel-content {
+		min-height: 30vh;
+		max-height: 70vh;
+		overflow-y: scroll;
+		background: #eeeeee;
+		padding-bottom: 15px;
+
+		.oncourse-extension-control-panel-content-tabs {
+			font-weight: bold;
+			font-size: 12px;
+			text-transform: uppercase;
+			list-style: none;
+			padding: 10px 5px;
+			margin: 10px auto 10px 0;
+			width: 75%;
+			display: flex;
+			justify-content: space-around;
+
+			li {
+				display: flex;
+				padding: 10px 12px;
+				line-height: 1;
+				margin: 0;
+				cursor: pointer;
+				border-radius: 2px;
+
+				&:hover {
+					.BoxShadowHelper(2);
+				}
+
+				&.active {
+					color: #26C6DA;
+				}
+			}
+		}
+	}
+}

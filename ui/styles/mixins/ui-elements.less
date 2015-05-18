@@ -1,0 +1,19 @@
+.Card() {
+	background-color: #f7f7f7;
+	.BoxShadowHelper(1);
+	transition: box-shadow .2s ease,
+				margin-left .2s ease,
+				margin-right .2s ease;
+
+	&:hover {
+		.BoxShadowHelper(3);
+		margin-left: -8px;
+		margin-right: -8px;
+	}
+
+	&.moving {
+		.BoxShadowHelper(4);
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+	}
+}

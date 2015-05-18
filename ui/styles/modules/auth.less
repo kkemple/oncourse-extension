@@ -1,0 +1,45 @@
+.oncourse-extension-login {
+	background-image: url(@b64-control-panel-header-bg);
+	background-size: cover;
+	background-color: rgba(255, 255, 255, 0.3);
+	min-height: 240px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: column;
+
+	h1 {
+		text-transform: uppercase;
+		color: white;
+		text-shadow: 2px 2px rgba(0,0,0,0.3);
+		font-size: 28px;
+		padding: 15px;
+	}
+
+	button {
+		outline: none;
+		border: none;
+		padding: 14px 20px;
+		background-color: #f06292;
+		color: white;
+		text-transform: uppercase;
+		font-size: 21px;
+		border-radius: 2px;
+		margin-bottom: 30px;
+		.BoxShadowHelper(2);
+
+		&:hover {
+			.BoxShadowHelper(3);
+		}
+
+		&:active {
+			.BoxShadowHelper(1);
+		}
+
+		span:first-child {
+			display: inline-block;
+			vertical-align: middle;
+			margin-right: 3px;
+		}
+	}
+}

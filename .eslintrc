@@ -1,0 +1,28 @@
+{
+	"parser": "babel-eslint",
+	"globals": {
+		"define": true,
+		"require": true,
+		"module": true,
+		"__dirname": true,
+		"process": true,
+		"console": true,
+		"window": true,
+		"document": true,
+		"chrome": true
+	},
+	"rules": {
+		"complexity": 5,
+		"max-len": [1, 120, 4],
+		"quotes": "single",
+		"curly": [2, "multi"],
+		"strict": [2, "global"],
+		"global-strict": [2, "always"],
+		"no-shadow": false,
+		"no-underscore-dangle": false,
+		"no-unused-vars": false,
+		"no-unused-expressions": false,
+		"no-console": false,
+		"no-debugger": false
+	}
+}
