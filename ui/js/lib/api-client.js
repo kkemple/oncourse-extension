@@ -3,9 +3,10 @@
 import request from 'superagent';
 import Promise from 'bluebird';
 
-const cacheHeaders = {
+const commonHeaders = {
 	'X-Requested-With': 'XMLHttpRequest',
-	'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1'
+	'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1',
+	'Accept': 'application/vnd.github.moondragon+json'
 };
 
 export default {
@@ -13,7 +14,7 @@ export default {
 		return new Promise((res, rej) => {
 			request.get(url)
 				.withCredentials()
-				.set(cacheHeaders)
+				.set(commonHeaders)
 				.set(headers)
 				.query(query)
 				.end((err, body) => {
@@ -27,7 +28,7 @@ export default {
 		return new Promise((res, rej) => {
 			request.post(url)
 				.withCredentials()
-				.set(cacheHeaders)
+				.set(commonHeaders)
 				.set(headers)
 				.query(query)
 				.send(data)
@@ -42,7 +43,7 @@ export default {
 		return new Promise((res, rej) => {
 			request.put(url)
 				.withCredentials()
-				.set(cacheHeaders)
+				.set(commonHeaders)
 				.set(headers)
 				.query(query)
 				.send(data)
@@ -57,7 +58,7 @@ export default {
 		return new Promise((res, rej) => {
 			request.patch(url)
 				.withCredentials()
-				.set(cacheHeaders)
+				.set(commonHeaders)
 				.set(headers)
 				.query(query)
 				.send(data)
@@ -72,7 +73,7 @@ export default {
 		return new Promise((res, rej) => {
 			request.delete(url)
 				.withCredentials()
-				.set(cacheHeaders)
+				.set(commonHeaders)
 				.set(headers)
 				.query(query)
 				.end((err, body) => {

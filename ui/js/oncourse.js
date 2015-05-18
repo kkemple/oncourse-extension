@@ -6,6 +6,7 @@ import Comments from 'modules/comments';
 import IssueEdit from 'modules/issues/edit';
 import AppStore from 'stores/app';
 import UserStore from 'stores/user';
+import ReposStore from 'stores/repos';
 import bind from 'lodash.bind';
 
 export default React.createClass({

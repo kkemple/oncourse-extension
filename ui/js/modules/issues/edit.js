@@ -7,12 +7,14 @@ import apiClient from 'lib/api-client';
 import AppStore from 'stores/app';
 import UserStore from 'stores/user';
 import IssuesStore from 'stores/issues';
+import ReposStore from 'stores/repos';
 import bind from 'lodash.bind';
 import map from 'lodash.map';
 import each from 'lodash.foreach';
 import pluck from 'lodash.pluck';
 import remove from 'lodash.remove';
 import assign from 'lodash.assign';
+import find from 'lodash.find';
 import indexOf from 'lodash.indexof';
 
 
@@ -31,7 +33,8 @@ export default React.createClass({
 			repoLabels: [],
 			currentLabels: [],
 			assignees: [],
-			assignee: UserStore.getProfile()
+			assignee: UserStore.getProfile(),
+			repo: ''
 		};
 	},
 
@@ -49,39 +52,46 @@ export default React.createClass({
 
 	update () {
 		const {issueDetail} = AppStore.getComponentState();
-		let {issue, repoLabels, assignees, tabs} = this.state;
+		let {issue} = this.state;
 
 		if (!issueDetail.active) {
 			this.setState({active: issueDetail.active});
 			return;
 		}
 
-		issue = IssuesStore.getById(issueDetail.issueId);
+		if (issueDetail.id > 0) issue = IssuesStore.getById(issueDetail.issueId);
 
-		if (!issue.id) return;
+		if (issue.repository)
+			this.setLabelsAndAssignees(issue.repository.url);
 
+		this.setState({
+			active: issueDetail.active,
+			issue: issue,
+			currentLabels: (issue.labels) ? pluck(issue.labels, 'name') : []
+		});
+
+		this.toggleTab(0);
+	},
+
+	setLabelsAndAssignees (url) {
+		let {repoLabels, assignees} = this.state;
 		const headers = {'Authorization': `token ${UserStore.getToken()}`};
 
 		apiClient
-			.get(issue.repository.url + '/labels', {}, headers)
+			.get(url + '/labels', {}, headers)
 			.then((response) => {
 				if (response.error) console.warn(response.error);
 				repoLabels = response.body;
 
 				return apiClient
-					.get(issue.repository.url + '/assignees', {}, headers);
+					.get(url + '/assignees', {}, headers);
 			})
 			.then((response) => {
 				if (response.error) console.warn(response.error);
 				assignees = response.body;
 
-				this.toggleTab(0);
-
 				this.setState({
-					active: issueDetail.active,
-					issue: issue,
 					repoLabels: repoLabels,
-					currentLabels: pluck(issue.labels, 'name'),
 					assignees: assignees,
 					assignee: UserStore.getProfile()
 				});
@@ -126,6 +136,13 @@ export default React.createClass({
 		this.setState({issue});
 	},
 
+	updateIssueRepo (e) {
+		const repos = ReposStore.getAll();
+		const repo = find(repos, {full_name: e.target.value});
+		this.setLabelsAndAssignees(repo.url);
+		this.setState({repo: e.target.value});
+	},
+
 	toggleLabelSelection (rl, e) {
 		let {currentLabels} = this.state;
 
@@ -143,7 +160,7 @@ export default React.createClass({
 
 	updateIssue (e) {
 		const headers = {'Authorization': `token ${UserStore.getToken()}`};
-		let {currentLabels, issue, assignee} = this.state;
+		let {currentLabels, issue, assignee, repo} = this.state;
 
 		const data = {
 			title: issue.title,
@@ -153,19 +170,29 @@ export default React.createClass({
 			assignee: assignee.login
 		};
 
-		apiClient
-			.patch(issue.url, data, {}, headers)
+		let method, url;
+
+		if (issue.id) {
+			method = 'patch';
+			url = issue.url;
+		} else {
+			method = 'post';
+			url = 'https://api.github.com/repos/' + repo + '/issues';
+		}
+
+		apiClient[method](url, data, {}, headers)
 			.then((response) => {
 				if (response.error) console.warn(response.error);
 
 				issue = assign({}, issue, response.body);
-				this.setState({issue});
+				this.setState(this.getInitialState());
 				this.close();
-				window.setTimeout(() => { IssuesStore.fetch(); }, 1000 * 3);
+				ReposStore.fetch();
 			});
 	},
 
 	render () {
+		const repos = ReposStore.getAll();
 		const {
 			active,
 			issue,
@@ -173,7 +200,8 @@ export default React.createClass({
 			repoLabels,
 			currentLabels,
 			assignees,
-			assignee
+			assignee,
+			repo
 		} = this.state;
 
 		return (active) ? (
@@ -196,6 +224,19 @@ export default React.createClass({
 				<div className="oncourse-extension-issues-edit-content-wrapper">
 					<div className="oncourse-extension-issues-edit-tab-content">
 						<div style={(tabs[0].active) ? {} : {display: 'none'}}>
+							{(!issue.id) ? (
+								<div>
+									<label>Repo</label>
+									<select
+										value={repo}
+										onChange={this.updateIssueRepo}>
+
+										{map(repos, (r) => {
+											return <option key={r.id} value={r.full_name}>{r.full_name}</option>;
+										})}
+									</select>
+								</div>
+							) : null}
 							<div>
 								<label>Title</label>
 								<input

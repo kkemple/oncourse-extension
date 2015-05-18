@@ -20,6 +20,7 @@
     "lodash.bind": "^3.1.0",
     "lodash.filter": "^3.1.0",
     "lodash.find": "^3.2.0",
+    "lodash.flatten": "^3.0.2",
     "lodash.foreach": "^3.0.3",
     "lodash.indexof": "^3.0.2",
     "lodash.pluck": "^3.1.1",

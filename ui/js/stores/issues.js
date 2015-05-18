@@ -1,6 +1,7 @@
 'use strict';
 
 import UserStore from './user';
+import ReposStore from './repos';
 import dispatcher from 'lib/dispatcher';
 import actions from 'lib/actions';
 import apiClient from 'lib/api-client';
@@ -10,6 +11,8 @@ import filter from 'lodash.filter';
 import throttle from 'lodash.throttle';
 import find from 'lodash.find';
 import bind from 'lodash.bind';
+import pluck from 'lodash.pluck';
+import flatten from 'lodash.flatten';
 
 const issuesUrl = 'https://api.github.com/user/issues';
 let authHeader = { 'Authorization': `token ${UserStore.getToken()}` };
@@ -23,23 +26,13 @@ const IssuesStore = assign({}, storeMixin, {
 
 	_issues: [],
 
-	fetch () {
-		if (!UserStore.getToken()) return;
+	update () {
+		const repos = ReposStore.getAll();
 
-		throttledGet(issuesUrl, {}, authHeader)
-			.then((response) => {
-				if (response.error) {
-					console.warn(response.error);
-					return;
-				}
+		if (!repos.length) return;
 
-				this._issues = filter(response.body, (i) => {
-					if (i.pull_request) return false;
-
-					return true;
-				});
-				this.emitChange();
-			});
+		this._issues = flatten(pluck(repos, 'issues'));
+		this.emitChange();
 	},
 
 	getById (id) {
@@ -48,28 +41,13 @@ const IssuesStore = assign({}, storeMixin, {
 
 	getAll () {
 		return this._issues;
-	},
-
-	poll () {
-		this.pollId = window.setInterval(bind(this.fetch, this), 1000 * 60 * 3);
-	},
-
-	stopPolling () {
-		if (this.pollId)
-			window.clearInterval(this.pollId);
 	}
 });
 
 IssuesStore.dispatcherId = dispatcher.register((event) => {
 	switch (event.type) {
-		case actions.USER_INFORMATION_UPDATED:
-			dispatcher.waitFor([UserStore.dispatcherId]);
-
-			if (UserStore.getToken()) {
-				authHeader = {'Authorization': `token ${UserStore.getToken()}`};
-				IssuesStore.fetch();
-				IssuesStore.poll();
-			}
+		case actions.REPOS_STORE_UPDATED:
+			if (UserStore.getToken()) IssuesStore.update();
 			break;
 	}
 });
