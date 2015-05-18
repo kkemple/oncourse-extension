@@ -12,7 +12,7 @@ import find from 'lodash.find';
 import bind from 'lodash.bind';
 
 const issuesUrl = 'https://api.github.com/user/issues';
-let authHeader = {'Authorization': `token ${UserStore.getToken()}`};
+let authHeader = { 'Authorization': `token ${UserStore.getToken()}` };
 
 const throttledGet = throttle(apiClient.get, 300);
 
