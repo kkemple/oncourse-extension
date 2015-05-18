@@ -24,6 +24,8 @@ const UserStore = assign({}, storeMixin, {
 			.then((response) => {
 				if (response.error) {
 					console.warn(response.error);
+					if (response.status === 401) this.apiToken = undefined;
+					this.emitChange();
 					return;
 				}
 

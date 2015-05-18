@@ -33,7 +33,7 @@ chrome.runtime.onMessage.addListener((request, sender, callback) => {
 			chrome.identity.launchWebAuthFlow({
 				interactive: true,
 				url: `https://github.com/login/oauth/authorize?
-					client_id=${clientId}&scope=user,repo`
+					client_id=${clientId}&scope=repo`
 			}, (responseUrl) => {
 				const code = responseUrl.match(codeRegex)[1];
 

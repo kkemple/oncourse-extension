@@ -52,7 +52,7 @@ export default React.createClass({
 					<div className="oncourse-extension-issue-info-content">
 						<div>
 							<h4>Owner</h4>
-							<span>{issue.assignee.login}</span>
+							<span>{(issue.assignee) ? issue.assignee.login : ''}</span>
 						</div>
 					</div>
 				</div>
