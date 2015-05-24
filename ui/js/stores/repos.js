@@ -28,6 +28,13 @@ const ReposStore = assign({}, storeMixin, {
 	fetch () {
 		if (!UserStore.getToken()) return;
 
+		const profile = UserStore.getProfile();
+
+		if (!profile) {
+			window.setTimeout(() => { this.fetch(); }, 300);
+			return;
+		}
+
 		throttledGet(reposUrl, {'per_page': 100}, authHeader)
 			.then((response) => {
 				if (response.error) {
@@ -42,10 +49,9 @@ const ReposStore = assign({}, storeMixin, {
 						.get(r.url + '/milestones', {}, authHeader);
 				});
 
-				const {login} = UserStore.getProfile();
 				const issuesPromises = map(this._repos, (r) => {
 					return apiClient
-						.get(r.url + '/issues', {assignee: login}, authHeader);
+						.get(r.url + '/issues', {assignee: profile.login}, authHeader);
 				});
 
 				Promise.all(issuesPromises)
@@ -77,7 +83,10 @@ const ReposStore = assign({}, storeMixin, {
 										return;
 									}
 
-									this._repos[i].milestones = result.body;
+									this._repos[i].milestones = map(result.body, (m) => {
+										m.repository = this._repos[i];
+										return m;
+									});
 								});
 
 								dispatcher.dispatch({ type: actions.REPOS_STORE_UPDATED });

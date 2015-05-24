@@ -22,7 +22,6 @@ module.exports = function(gulp) {
 				debug: true
 			})
 			.transform(babelify)
-			.transform(hbsfy)
 			.bundle()
 			.on('error', function(err) { console.log(err.message); })
 			.pipe(plumber({

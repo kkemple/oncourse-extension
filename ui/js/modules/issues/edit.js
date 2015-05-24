@@ -17,6 +17,7 @@ import assign from 'lodash.assign';
 import find from 'lodash.find';
 import indexOf from 'lodash.indexof';
 
+let cache = {};
 
 export default React.createClass({
 	getInitialState () {
@@ -29,7 +30,7 @@ export default React.createClass({
 				{active: false, icon: 'oc-icon-timer-auto'}
 			],
 			active: issueDetail.active,
-			issue: {},
+			issue: { body: '', title: '' },
 			repoLabels: [],
 			currentLabels: [],
 			assignees: [],
@@ -52,17 +53,19 @@ export default React.createClass({
 
 	update () {
 		const {issueDetail} = AppStore.getComponentState();
-		let {issue} = this.state;
+		this.setState(this.getInitialState());
+		let issue = {};
 
 		if (!issueDetail.active) {
 			this.setState({active: issueDetail.active});
 			return;
 		}
 
-		if (issueDetail.id > 0) issue = IssuesStore.getById(issueDetail.issueId);
+		if (issueDetail.issueId > 0) issue = IssuesStore.getById(issueDetail.issueId);
 
 		if (issue.repository)
 			this.setLabelsAndAssignees(issue.repository.url);
+		else this.setLabelsAndAssignees(ReposStore.getAll()[0].url);
 
 		this.setState({
 			active: issueDetail.active,
@@ -105,6 +108,8 @@ export default React.createClass({
 			type: actions.HIDE_ONCOURSE_COMPONENT,
 			component: 'issueDetail'
 		});
+
+		this.setState(this.getInitialState());
 	},
 
 	toggleTab (index) {
@@ -185,7 +190,6 @@ export default React.createClass({
 				if (response.error) console.warn(response.error);
 
 				issue = assign({}, issue, response.body);
-				this.setState(this.getInitialState());
 				this.close();
 				ReposStore.fetch();
 			});
@@ -249,7 +253,7 @@ export default React.createClass({
 								<textarea
 									type="text"
 									placeholder="What's the issue..."
-									value={issue.body}
+									value={(issue.body) ? issue.body : ''}
 									onChange={this.updateIssueBody}>
 								</textarea>
 							</div>

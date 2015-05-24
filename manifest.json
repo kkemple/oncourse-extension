@@ -32,6 +32,7 @@
 			"css": [
 				//"ui/css/font-awesome-base64-font.css",
 				"ui/css/oncourse-icons.css",
+				"ui/css/loaders.min.css",
 				"ui/css/animate.css",
 				"ui/css/app.css"
 			]

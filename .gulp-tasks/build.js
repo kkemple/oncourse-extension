@@ -10,6 +10,7 @@ module.exports = function(gulp) {
 			'bundle-services',
 			'bundle-ui',
 			'copy-vendor-css',
+			'copy-loaders-css',
 			'copy-manifest',
 			'copy-assets'
 		], done);

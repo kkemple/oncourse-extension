@@ -1,0 +1,129 @@
+.oncourse-extension-control-panel-repo-card {
+	.Card();
+	margin-bottom: 15px;
+	text-align: left;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	&:hover {
+
+		.oncourse-extension-control-panel-repo-card-title {
+			padding: 15px 23px 0;
+		}
+
+		.oncourse-extension-repo-quick-view-groupings {
+			padding: 15px 23px;
+		}
+
+		.oncourse-extension-issue-inline-card {
+			padding: 12px 23px !important;
+		}
+	}
+
+	.oncourse-extension-control-panel-repo-card-title {
+		font-size: 21px;
+		margin: 0;
+		padding: 15px 15px 0;
+		transition: padding .2s ease;
+		cursor: pointer;
+	}
+
+	.oncourse-extension-repo-quick-view-groupings {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		align-items: flex-start;
+		order: 2;
+		font-size: 13px;
+		padding: 15px;
+		transition: padding .2s ease;
+
+		.oncourse-extension-control-panel-repo-card-desc {
+			margin-bottom: 15px;
+		}
+
+		.oncourse-extension-repo-quick-view-grouping-item {
+			display: block;
+			margin-bottom: 5px;
+
+			span:first-child {
+				font-weight: bold;
+				text-transform: uppercase;
+			}
+
+			span:last-child {
+				margin-left: 5px;
+
+				color: #f06292;
+				text-decoration: none;
+
+				a {
+					cursor: pointer;
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+
+	.oncourse-extension-repo-issues-list {
+		padding: 0;
+		list-style: none;
+		margin: 0;
+
+		.oncourse-extension-issue-inline-card {
+			padding: 12px 15px;
+			transition: padding .2s ease;
+			border-bottom: 1px solid #dddddd;
+
+			&:first-child {
+				border-top: 1px solid #dddddd;
+			}
+
+			&:last-child {
+				border-bottom: none;
+			}
+
+			.oncourse-extension-issue-inline-card-title {
+				font-size: 16px;
+				font-weight: bold;
+			}
+
+			.oncourse-extension-control-panel-issue-actions {
+				margin-top: 15px;
+				font-size: 18px;
+				display: flex;
+				flex-direction: row;
+				align-items: flex-start;
+				justify-content: flex-start;
+
+				button {
+					margin-right: 5px;
+					cursor: pointer;
+					border-radius: 50%;
+					width: 34px;
+					height: 34px;
+					line-height: 34px;
+					border: none;
+					outline: none;
+					background-color: transparent;
+					display: inline-block;
+						text-align: left;
+
+					&:active, &:focus {
+						background-color: rgba(0, 0, 0, 0.1);
+					}
+
+					span {
+						margin: auto;
+
+						.oc-icon-octoface {
+							display: flex;
+						}
+					}
+				}
+			}
+		}
+	}
+}

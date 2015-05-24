@@ -16,6 +16,7 @@
     "ampersand-router": "^3.0.2",
     "async": "^0.9.0",
     "bluebird": "^2.9.25",
+    "loaders.css": "^0.1.1",
     "lodash.assign": "^3.1.0",
     "lodash.bind": "^3.1.0",
     "lodash.filter": "^3.1.0",
@@ -26,6 +27,7 @@
     "lodash.pluck": "^3.1.1",
     "lodash.remove": "^3.1.0",
     "lodash.throttle": "^3.0.2",
+    "moment": "^2.10.3",
     "react": "^0.13.3",
     "shelljs": "^0.3.0",
     "superagent": "^0.21.0"

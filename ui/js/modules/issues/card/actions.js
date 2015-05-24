@@ -5,6 +5,7 @@ import dispatcher from 'lib/dispatcher';
 import actions from 'lib/actions';
 import apiClient from 'lib/api-client';
 import UserStore from 'stores/user';
+import ReposStore from 'stores/repos';
 import assign from 'lodash.assign';
 
 export default React.createClass({
@@ -54,7 +55,7 @@ export default React.createClass({
 		});
 	},
 
-	closeIssue (e) {
+	closeIssue () {
 		const {issue} = this.state;
 		const {changeMethod} = this.props;
 		const data = {state: 'closed'};
@@ -64,6 +65,7 @@ export default React.createClass({
 			.patch(issue.url, data, {}, headers)
 			.then((response) => {
 				changeMethod(assign({}, issue, response.body));
+				ReposStore.fetch();
 			});
 	},
 
@@ -72,7 +74,6 @@ export default React.createClass({
 
 		return (
 			<div className="oncourse-extension-control-panel-issue-actions">
-				{/*<button><span><i className="oc-icon-share"></i></span></button>*/}
 				<button
 					onClick={this.openIssueInGithub}
 					title="Open In Github">

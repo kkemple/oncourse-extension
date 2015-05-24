@@ -1,48 +1,60 @@
 'use strict';
 
 import React from 'react';
-import map from 'lodash.map';
 import bind from 'lodash.bind';
-import each from 'lodash.foreach';
-import filter from 'lodash.filter';
 
 export default React.createClass({
-	getInitialState () {
+	getDefaultProps () {
 		return {
-			tabs: [
-				{ value: 'issues', label: 'Issues', active: true },
-				{ value: 'milestones', label: 'Milestones', active: false },
-				{ value: 'repos', label: 'Repos', active: false }
-			]
+			tabs: {},
+			changeMethod: () => {}
 		};
 	},
 
-	toggleActive (index, e) {
-		let {tabs} = this.state;
+	getInitialState () {
+		return {
+			tabs: this.props.tabs
+		};
+	},
 
-		if (tabs[index].active) return;
+	toggleActive (tab, e) {
+		if (e) e.preventDefault();
 
-		tabs = each(tabs, (t) => { t.active = false; });
-		tabs[index].active = true;
-		this.setState({tabs});
+		const {changeMethod} = this.props;
+		changeMethod(tab);
 	},
 
 	render () {
-		const {tabs} = this.state;
+		const {issues, milestones, repos} = this.state.tabs;
 
 		return (
 			<ul className="oncourse-extension-control-panel-content-tabs">
-				{map(tabs, (t, i) => {
-					return (
-						<li
-							key={i}
-							className={t.active ? 'active' : ''}
-							onClick={bind(this.toggleActive, this, i)}>
+				{(issues) ? (
+					<li
+						className={issues.active ? 'active' : ''}
+						onClick={bind(this.toggleActive, this, 'issues')}>
 
-							{t.label}
-						</li>
-					);
-				})}
+						{issues.label}
+					</li>
+				) : null}
+
+				{(milestones) ? (
+					<li
+						className={milestones.active ? 'active' : ''}
+						onClick={bind(this.toggleActive, this, 'milestones')}>
+
+						{milestones.label}
+					</li>
+				) : null}
+
+				{(repos) ? (
+					<li
+						className={repos.active ? 'active' : ''}
+						onClick={bind(this.toggleActive, this, 'repos')}>
+
+						{repos.label}
+					</li>
+				) : null}
 			</ul>
 		);
 	}

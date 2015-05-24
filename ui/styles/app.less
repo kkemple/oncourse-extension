@@ -31,6 +31,7 @@
 	*, *:before, *:after {
 		box-sizing: inherit;
 		font-family: inherit;
+		word-wrap: break-word;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
@@ -42,6 +43,9 @@
 	@import 'widgets';
 	@import 'modules/control-panel';
 	@import 'modules/issues';
+	@import 'modules/milestones';
+	@import 'modules/repos';
 	@import 'modules/comments';
 	@import 'modules/auth';
+	@import 'components/loader';
 }

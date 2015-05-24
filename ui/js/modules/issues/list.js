@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Card from './card';
+import Loader from 'components/loader';
 import map from 'lodash.map';
 
 export default React.createClass({
@@ -10,19 +11,24 @@ export default React.createClass({
 	},
 
 	getDefaultProps () {
-		return {
-			issues: []
-		};
+		return { issues: [] };
 	},
 
 	componentWillReceiveProps (newProps) {
-		this.setState({ issues: newProps.issues });
+		const {issues} = newProps;
+		this.setState({issues});
 	},
 
 	render () {
+		const {issues} = this.props;
+
 		return (
 			<div className="oncourse-extension-control-panel-issues">
-				{map(this.props.issues, (issue, i) => <Card key={i} issue={issue} />)}
+				{(issues.length) ? (
+					map(issues, (issue, i) => <Card key={i} issue={issue} />)
+				) : (
+					<Loader />
+				)}
 			</div>
 		);
 	}

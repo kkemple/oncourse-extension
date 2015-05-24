@@ -23,19 +23,21 @@
 	}
 
 	ul {
-		flex: 1 auto;
 		padding: 15px;
 		margin: 40px 0 0;
 		max-height: 80vh;
 		overflow-y: scroll;
+		list-style: none;
 
 		li {
 			margin-bottom: 20px;
-			display: flex;
-			justify-content: space-between;
-			align-items: flex-start;
+			overflow: hidden;
+			clear: both;
+			position: relative;
 
 			img {
+				display: inline-block;
+				float: left;
 				width: 30px;
 				height: 30px;
 				border-radius: 50%;
@@ -45,8 +47,13 @@
 			}
 
 			.oncourse-extension-comments-view-comment-body {
+				display: inline-block;
+				width: 85%;
+				float: right;
+				word-wrap: break-word;
+				margin-bottom: 10px;
+				margin-right: 20px;
 				background: rgba(255, 255, 255, .92);
-				flex: 1 auto;
 				min-height: 40px;
 				padding: 10px;
 				text-align: left;
@@ -54,7 +61,7 @@
 
 				.oncourse-extension-comments-view-comment-author {
 					display: block;
-					text-align: right;
+					text-align: left;
 					font-size: 10px;
 					color: #dddddd;
 					margin-top: 10px;
