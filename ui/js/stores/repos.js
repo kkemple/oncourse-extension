@@ -65,6 +65,7 @@ const ReposStore = assign({}, storeMixin, {
 
 							this._repos[i].issues = map(result.body, (r) => {
 								r.repository = {
+									'id': this._repos[i].id,
 									'url': this._repos[i].url,
 									'html_url': this._repos[i].html_url,
 									'full_name': this._repos[i].full_name

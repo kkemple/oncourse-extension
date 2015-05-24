@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Actions from './card/actions';
+import QuickLabels from './card/quick-labels';
 
 export default React.createClass({
 	getDefaultProps () {
@@ -19,6 +20,7 @@ export default React.createClass({
 				<div className="oncourse-extension-issue-inline-card-actions">
 					<Actions issue={issue} />
 				</div>
+				<QuickLabels issue={issue} />
 			</li>
 		);
 	}

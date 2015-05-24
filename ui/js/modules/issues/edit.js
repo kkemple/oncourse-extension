@@ -8,6 +8,7 @@ import AppStore from 'stores/app';
 import UserStore from 'stores/user';
 import IssuesStore from 'stores/issues';
 import ReposStore from 'stores/repos';
+import MilestonesStore from 'stores/milestones';
 import bind from 'lodash.bind';
 import map from 'lodash.map';
 import each from 'lodash.foreach';
@@ -35,7 +36,8 @@ export default React.createClass({
 			currentLabels: [],
 			assignees: [],
 			assignee: UserStore.getProfile(),
-			repo: ''
+			repo: '',
+			milestone: 'None'
 		};
 	},
 
@@ -70,6 +72,7 @@ export default React.createClass({
 		this.setState({
 			active: issueDetail.active,
 			issue: issue,
+			milestone: (issue.milestone) ? issue.milestone.title : 'None',
 			currentLabels: (issue.labels) ? pluck(issue.labels, 'name') : []
 		});
 
@@ -148,6 +151,10 @@ export default React.createClass({
 		this.setState({repo: e.target.value});
 	},
 
+	updateIssueMilestone (e) {
+		this.setState({milestone: e.target.value});
+	},
+
 	toggleLabelSelection (rl, e) {
 		let {currentLabels} = this.state;
 
@@ -165,33 +172,40 @@ export default React.createClass({
 
 	updateIssue (e) {
 		const headers = {'Authorization': `token ${UserStore.getToken()}`};
-		let {currentLabels, issue, assignee, repo} = this.state;
-
-		const data = {
-			title: issue.title,
-			body: issue.body,
-			state: issue.state,
-			labels: currentLabels,
-			assignee: assignee.login
-		};
+		let {currentLabels, issue, assignee, repo, milestone} = this.state;
 
 		let method, url;
 
 		if (issue.id) {
 			method = 'patch';
 			url = issue.url;
+
+			if (milestone === 'None') milestone = null;
+			else {
+				let milestones = ReposStore.getById(issue.repository.id).milestones;
+				milestone = find(milestones, (m) => m.title === milestone).number;
+			}
 		} else {
 			method = 'post';
 			url = 'https://api.github.com/repos/' + repo + '/issues';
 		}
 
+		const data = {
+			title: issue.title,
+			body: issue.body,
+			state: issue.state,
+			labels: currentLabels,
+			assignee: assignee.login,
+			milestone: milestone
+		};
+
 		apiClient[method](url, data, {}, headers)
 			.then((response) => {
 				if (response.error) console.warn(response.error);
 
-				issue = assign({}, issue, response.body);
+				this.setState(this.getInitialState());
 				this.close();
-				ReposStore.fetch();
+				window.setTimeout(() => { ReposStore.fetch(); }, 500);
 			});
 	},
 
@@ -205,8 +219,20 @@ export default React.createClass({
 			currentLabels,
 			assignees,
 			assignee,
-			repo
+			repo,
+			milestone
 		} = this.state;
+
+		let id;
+
+		if (issue.id)
+			id = issue.repository.id;
+		else if (repos.length)
+			id = (repo !== '') ?
+				find(repos, (r) => r.full_name === repo).id :
+				repos[0].id;
+
+		let milestones = (id) ? ReposStore.getById(id).milestones : [];
 
 		return (active) ? (
 			<div className="oncourse-extension-issues-edit-view">
@@ -241,6 +267,18 @@ export default React.createClass({
 									</select>
 								</div>
 							) : null}
+							<div>
+								<label>Milestone</label>
+								<select
+									value={milestone}
+									onChange={this.updateIssueMilestone}>
+
+									<option value="None">None</option>
+									{map(milestones, (m) => {
+										return <option key={m.id} value={m.title}>{m.title}</option>;
+									})}
+								</select>
+							</div>
 							<div>
 								<label>Title</label>
 								<input
