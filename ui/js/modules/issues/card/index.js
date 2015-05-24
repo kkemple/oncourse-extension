@@ -40,7 +40,7 @@ export default React.createClass({
 		const {expanded, issue} = this.state;
 		const arrowDirection = (expanded) ? 'up' : 'down';
 
-		return (issue.state === "open") ? (
+		return (issue.state === 'open') ? (
 			<div className="oncourse-card oncourse-extension-control-panel-issue-card">
 				<div className="oncourse-extension-control-panel-issue-info">
 					<h3>{issue.title}</h3>

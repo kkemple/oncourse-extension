@@ -5,7 +5,6 @@ import Promise from 'bluebird';
 
 const commonHeaders = {
 	'X-Requested-With': 'XMLHttpRequest',
-	'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=-1',
 	'Accept': 'application/vnd.github.moondragon+json'
 };
 

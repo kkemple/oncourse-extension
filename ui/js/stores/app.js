@@ -33,7 +33,7 @@ const AppStore = assign({}, storeMixin, {
 		});
 
 		this.components[component].active = active;
-		if (id) this.components[component].issueId = id;
+		if (id !== undefined) this.components[component].issueId = id;
 
 		this.emitChange();
 	},
