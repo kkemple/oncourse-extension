@@ -47,9 +47,7 @@ export default React.createClass({
 					<span className="oncourse-extension-milestone-quick-view-grouping-item">
 						Repo:
 						<span>
-							<a href={milestone.repository.html_url} target="_blank">
-								{milestone.repository.full_name}
-							</a>
+							{milestone.repository.full_name}
 						</span>
 					</span>
 

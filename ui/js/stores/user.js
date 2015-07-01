@@ -34,6 +34,16 @@ const UserStore = assign({}, storeMixin, {
 			});
 	},
 
+	clearUser () {
+		chrome.runtime.sendMessage({
+			type: actions.OPEN_NEW_TAB,
+			url: 'https://github.com/settings/applications'
+		});
+		this.apiToken = undefined;
+		this.profile = undefined;
+		this.emitChange();
+	},
+
 	isLoggedIn () {
 		return !!this.apiToken;
 	},
@@ -51,6 +61,9 @@ UserStore.dispatcherId = dispatcher.register((event) => {
 	switch (event.type) {
 		case actions.USER_INFORMATION_UPDATED:
 			UserStore.refresh(event.data);
+			break;
+		case actions.USER_LOGGED_OUT:
+			UserStore.clearUser();
 			break;
 	}
 });

@@ -93,8 +93,8 @@ export default React.createClass({
 						.then((response) => {
 							if (response.error) console.warn(response.error);
 
-							this.close();
 							ReposStore.fetch();
+							this.close();
 						});
 			});
 	},

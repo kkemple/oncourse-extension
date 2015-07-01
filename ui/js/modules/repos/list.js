@@ -18,6 +18,11 @@ export default React.createClass({
 		return { repos: [] };
 	},
 
+	componentWillReceiveProps (newProps) {
+		const {repos} = newProps;
+		this.setState({repos});
+	},
+
 	render () {
 		const {repos} = this.props;
 

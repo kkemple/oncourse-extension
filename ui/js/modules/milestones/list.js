@@ -18,6 +18,11 @@ export default React.createClass({
 		return { milestones: [] };
 	},
 
+	componentWillReceiveProps (newProps) {
+		const {milestones} = newProps;
+		this.setState({milestones});
+	},
+
 	render () {
 		const {milestones} = this.props;
 

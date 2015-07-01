@@ -22,7 +22,8 @@ export default React.createClass({
 	},
 
 	componentWillReceiveProps (newProps) {
-		this.setState({ issue: newProps.issue });
+		const {issue} = newProps;
+		this.setState({issue});
 	},
 
 	toggleExpanded (e) {

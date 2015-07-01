@@ -15,5 +15,6 @@ export default keyMirror({
 	REPOS_STORE_UPDATED: null,
 	MILESTONES_STORE_UPDATED: null,
 	OPEN_NEW_TAB: null,
-	UPDATE_FILTER: null
+	UPDATE_FILTER: null,
+	USER_LOGGED_OUT: null
 });

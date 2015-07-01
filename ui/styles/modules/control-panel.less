@@ -21,7 +21,7 @@
 		background-size: cover;
 
 		.oncourse-extension-control-panel-header-inner {
-			display: flex;
+			display: block;
 			flex-direction: column;
 			flex-wrap: nowrap;
 			justify-content: space-between;
@@ -33,7 +33,7 @@
 			.oncourse-extension-control-panel-account {
 				color: white;
 				display: flex;
-				flex: .5;
+				flex: 1 60px;
 				flex-direction: row;
 				justify-content: space-between;
 				align-items: center;
@@ -63,12 +63,12 @@
 					display: flex;
 					flex-direction: row;
 					align-items: center;
-					justify-content: space-between;
+					justify-content: flex-end;
 					flex-wrap: nowrap;
 
 					.oncourse-extension-control-panel-action {
 						display: flex;
-						margin: auto;
+						margin-right: 5px;
 						cursor: pointer;
 						font-size: 18px;
 					}
@@ -78,7 +78,7 @@
 			.oncourse-extension-control-panel-search {
 				margin-top: -30px;
 				padding: 15px;
-				display: flex;
+				display: none;
 				flex: 1 auto;
 				flex-direction: row;
 				align-items: center;

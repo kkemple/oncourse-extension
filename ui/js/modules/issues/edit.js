@@ -188,6 +188,12 @@ export default React.createClass({
 		} else {
 			method = 'post';
 			url = 'https://api.github.com/repos/' + repo + '/issues';
+
+			if (milestone === 'None') milestone = null;
+			else {
+				let milestones = find(ReposStore.getAll(), (r) => r.full_name === repo).milestones;
+				milestone = find(milestones, (m) => m.title === milestone).number;
+			}
 		}
 
 		const data = {

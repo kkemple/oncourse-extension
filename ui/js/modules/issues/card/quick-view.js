@@ -21,9 +21,7 @@ export default React.createClass({
 			milestone = <span className="oncourse-extension-issue-quick-view-grouping-item">
 				Milestone:
 				<span>
-					<a href={issue.milestone.html_url} target="_blank">
-						{issue.milestone.title}
-					</a>
+					{issue.milestone.title}
 				</span>
 			</span>;
 		else
@@ -35,9 +33,7 @@ export default React.createClass({
 					<span className="oncourse-extension-issue-quick-view-grouping-item">
 						Repo:
 						<span>
-							<a href={issue.repository.html_url} target="_blank">
-								{issue.repository.full_name}
-							</a>
+							{issue.repository.full_name}
 						</span>
 					</span>
 					{milestone}
